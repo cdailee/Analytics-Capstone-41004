@@ -1,0 +1,18 @@
+def makenafalse(dataset, listname):
+    for i in range(len(listname)):
+        dataset[listname[i]].fillna(value = "False", inplace = True)
+
+"""
+the list of columns that needed its missing
+values turn to 'FALSE' is as follows below
+"""
+
+mylist = ["HasStudy", "HasSeparateDining", "HasFamilyRoom", "HasSunroom", 
+          "HasBilliardRoom", "HasRumpusRoom", "HasFireplace", 
+          "HasWalkInWardrobe", "HasCourtyard", "HasInternalLaundry", 
+          "HasHeating", "HasSauna","HasAirConditioning", "HasBalcony", 
+          "HasBarbeque", "HasPolishedTimberFloor", "HasEnsuite", "HasSpa", 
+          "HasGarage", "HasLockUpGarage", "HasPool", "HasTennisCourt", 
+          "HasBeenRenovated", "HasAlarm", "HasWaterView", "HasHarbourView", 
+          "HasOceanView", "HasCityView", "HasBushView", "HasDistrictView", 
+          "HasBayView", "HasParkView", "HasRiverView", "HasMountainView"]
