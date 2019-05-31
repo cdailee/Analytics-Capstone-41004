@@ -1,12 +1,14 @@
+#import all the require model package
 import pandas as pd 
 from sklearn.preprocessing import StandardScaler 
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 
+#Import the CSV training dataset 
 data = pd.read_csv('/Users/chris/Desktop/Dataprogramming/datasets/train_binary.csv', encoding='utf-8')
 data.head(50)
 
-
+#Set up sub attributes values
 X = data[["HasStudy", "HasSeparateDining", "HasFamilyRoom", "HasSunroom", 
           "HasBilliardRoom", "HasRumpusRoom", "HasFireplace", 
           "HasWalkInWardrobe", "HasCourtyard", "HasInternalLaundry", 
@@ -23,6 +25,7 @@ Y = data[["Price"]]
 Z = data[["Price1"]]
 X.head(10), Y.head(10)
 
+#import matrix model 
 from sklearn.preprocessing import StandardScaler
 x_std = StandardScaler().fit_transform(X)
 
@@ -33,8 +36,8 @@ features = x_std.T
 covariance_matrix = np.cov(features).round(3)
 print(covariance_matrix)
 
+#Calculate the eigenvalue and eigenvector
 eig_vals, eig_vecs = np.linalg.eig(covariance_matrix)
-
 print('Eigenvectors \n%s' %eig_vecs)
 
 print('\nEigenvalues \n%s' %eig_vals.round(4))
