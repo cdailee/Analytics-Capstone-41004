@@ -1,0 +1,5 @@
+missing_lat_lng = data[np.isnan(data.loc[:,'Longitude']) == True].loc[:,['Suburb', 'State', 'Postcode', 'Latitude', 'Longitude']]
+missing_lat_lng.Postcode = missing_lat_lng.Postcode.astype('int')
+missing_lat_lng.Postcode = missing_lat_lng.Postcode.astype('str')
+missing_lat_lng['Location'] = missing_lat_lng['Suburb']+", "+ missing_lat_lng['State']+", "+ missing_lat_lng['Postcode']
+
