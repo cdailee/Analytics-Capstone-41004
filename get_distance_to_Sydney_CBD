@@ -1,0 +1,11 @@
+indexes_test = [n for n in my_test_df.index]
+test_lat = [n for n in my_test_df.Latitude]
+test_long = [n for n in my_test_df.Longitude]
+
+for i, lat, long in zip(indexes_test, test_lat, test_long):
+    try:
+        my_test_df.loc[i,'Distance_in_m'] = (gmaps.distance_matrix((origin_lat, origin_long),(-33.86785, 151.20732), 
+                                                             mode='driving')['rows'][0]["elements"][0]['distance']['value'])
+    except:
+        my_test_df.loc[i,'Distance_in_m'] = gmaps.distance_matrix(origin, (-33.86785, 151.20732), 
+                                                            mode='transit')['rows'][0]['elements'][0]['distance']['value']
