@@ -1,0 +1,13 @@
+def get_lat_lng(apiKey, address):
+    import requests
+    url = ("https://maps.googleapis.com/maps/api/geocode/json?address={}&key={}".format(address.replace(' ','+'), apiKey))
+    try:
+        response = requests.get(url)
+        resp_json_payload = response.json()
+        lat = resp_json_payload['results'][0]['geometry']['location']['lat']
+        lng = resp_json_payload['results'][0]['geometry']['location']['lng']
+    except:
+        print('ERROR: {}'.format(address))
+        lat = 0
+        lng = 0
+    return lat, lng
