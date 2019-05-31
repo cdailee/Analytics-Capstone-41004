@@ -1,0 +1,50 @@
+"""
+The section below obtains the values that we desired to fill into the empty cells
+note: this could be changed from median to mean if desired
+"""
+
+def propertytypebath(dataset, propertytype):
+    return dataset.groupby("PropertyType").Baths.median()[propertytype]
+
+def propertytypebedrooms(dataset, propertytype):
+    return dataset.groupby('PropertyType').Bedrooms.median()[propertytype]
+
+def propertytypearea(dataset, propertytype):
+    return dataset.groupby('PropertyType').AreaSize.median()[propertytype]
+    
+    
+    
+"""
+The section below inserts the values we have obtained above into the desired empty cells
+in accordance to the columns
+""" 
+def fillbedroommedia(dataset, propertytype):
+    mylist = []
+    mylist.extend([n for n in dataset.index if np.logical_and(np.isnan(dataset.loc[n, "Bedrooms"]), dataset.loc[n, "PropertyType"] == propertytype)])
+    for i in range(len(mylist)):
+        dataset.loc[mylist[i], "Bedrooms"] = propertytypebedrooms(dataset, propertytype)
+
+def fillbathmedian(dataset, propertytype):
+    mylist = []
+    mylist.extend([i for i in dataset.index if np.logical_and(np.isnan(dataset.loc[i, "Baths"]), dataset.loc[i, "PropertyType"] == propertytype)])
+    for i in range(len(mylist)):
+            dataset.loc[mylist[i], "Baths"] = propertytypebath(dataset, propertytype)
+
+def fillmedianarea(dataset, propertytype):
+    mylist = []
+    mylist.extend([i for i in dataset.index if np.logical_and(np.isnan(dataset.loc[i, "AreaSize"]), dataset.loc[i, "PropertyType"] == propertytype)])
+    for i in range(len(mylist)):
+            dataset.loc[mylist[i], "AreaSize"] = propertytypebath(dataset, propertytype)
+
+
+
+"""
+The code below calls all the functions above which enables us to easily call all the other functions
+"""         
+def filler(dataset):
+    mylist2 = ['Unit', 'House', 'Terrace', 'Townhouse', 'Villa', 'Cottage','Semi', 'Duplex', 'Studio']
+    for i in range(len(mylist2)):
+        fillmedianarea(dataset, mylist2[i])
+        fillbathmedian(dataset, mylist2[i])
+        fillbedroommedia(dataset, mylist2[i])
+        
