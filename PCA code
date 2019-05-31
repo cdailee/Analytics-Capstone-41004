@@ -1,0 +1,50 @@
+import pandas as pd 
+from sklearn.preprocessing import StandardScaler 
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+
+data = pd.read_csv('/Users/chris/Desktop/Dataprogramming/datasets/train_binary.csv', encoding='utf-8')
+data.head(50)
+
+
+X = data[["HasStudy", "HasSeparateDining", "HasFamilyRoom", "HasSunroom", 
+          "HasBilliardRoom", "HasRumpusRoom", "HasFireplace", 
+          "HasWalkInWardrobe", "HasCourtyard", "HasInternalLaundry", 
+          "HasHeating", "HasSauna","HasAirConditioning", "HasBalcony", 
+          "HasBarbeque", "HasPolishedTimberFloor", "HasEnsuite", "HasSpa", 
+          "HasGarage", "HasLockUpGarage", "HasPool", "HasTennisCourt", 
+          "HasBeenRenovated", "HasAlarm", "HasWaterView", "HasHarbourView", 
+          "HasOceanView", "HasCityView", "HasBushView", "HasDistrictView", 
+          "HasBayView", "HasParkView", "HasRiverView", "HasMountainView"]]
+
+
+Y = data[["Price"]]
+
+Z = data[["Price1"]]
+X.head(10), Y.head(10)
+
+from sklearn.preprocessing import StandardScaler
+x_std = StandardScaler().fit_transform(X)
+
+import numpy as np
+
+# features are columns from x_std
+features = x_std.T 
+covariance_matrix = np.cov(features).round(3)
+print(covariance_matrix)
+
+eig_vals, eig_vecs = np.linalg.eig(covariance_matrix)
+
+print('Eigenvectors \n%s' %eig_vecs)
+
+print('\nEigenvalues \n%s' %eig_vals.round(4))
+eig_vals[0] / sum(eig_vals)
+projected_X = x_std.dot(eig_vecs.T[0])
+projected_X
+
+result = pd.DataFrame(projected_X, columns=['PC1'])
+result['y-axis'] = 0.0
+result.head(10)
+
+
+result['label'] = Z
